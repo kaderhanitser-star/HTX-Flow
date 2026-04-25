@@ -49,7 +49,6 @@
             border-radius: 50%;
         }
 
-        /* --- لمسة احترافية للعنوان: التدفق المتدرج --- */
         @keyframes textShimmerFlow {
             0% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
@@ -60,33 +59,26 @@
             margin: 10px 0;
             letter-spacing: 1px;
             text-transform: uppercase;
-            cursor: pointer; /* ليشير للمستخدم بأنه تفاعلي */
-
-            /* إعداد النص المتدرج */
+            cursor: pointer;
             background: linear-gradient(
                 to right,
-                #f8fafc 20%, /* الأبيض */
-                #38bdf8 40%, /* الأزرق التقني */
-                #a855f7 60%, /* الأرجواني (لعمق التدفق) */
-                #f8fafc 80%  /* الأبيض مرة أخرى */
+                #f8fafc 20%,
+                #38bdf8 40%,
+                #a855f7 60%,
+                #f8fafc 80%
             );
             background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-fill-color: transparent;
-
-            /* تفعيل الحركة المستمرة */
             animation: textShimmerFlow 8s linear infinite;
-            transition: text-shadow 0.3s ease; /* من أجل توهج التمرير */
+            transition: text-shadow 0.3s ease;
         }
 
-        /* لمسة التمرير للعنوان */
         h1:hover {
-            animation-duration: 3s; /* تسريع التدفق عند التمرير */
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.7); /* توهج أزرق ناعم */
+            animation-duration: 3s;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.7);
         }
-        /* -------------------------------------- */
 
         .subtitle { color: #94a3b8; font-size: 0.8rem; margin-bottom: 30px; letter-spacing: 2px; }
 
@@ -222,13 +214,18 @@
 <div id="qrModal" class="modal" onclick="closeQR()">
     <div class="modal-content" onclick="event.stopPropagation()">
         <h3 style="margin-bottom: 20px; color: white;">شارك ملفك التعريفي</h3>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://t.me/HTX7Flow" alt="QR Code">
+        <img id="qrImage" src="" alt="QR Code">
         <span class="close-modal" onclick="closeQR()">إغلاق</span>
     </div>
 </div>
 
 <script>
     function openQR() {
+        // التعديل الاحترافي: جلب الرابط الحالي وتحديث الـ QR تلقائياً
+        const currentUrl = window.location.href;
+        const qrImg = document.getElementById('qrImage');
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}`;
+        
         document.getElementById('qrModal').style.display = 'flex';
     }
 
