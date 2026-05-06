@@ -6,6 +6,31 @@
     <title>HTX Flow Digital</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(56, 189, 248, 0.2);
+            border: 1px solid #38bdf8;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #38bdf8;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+            z-index: 100;
+        }
+
+        .lang-toggle:hover {
+            background: #38bdf8;
+            color: #0f172a;
+            transform: scale(1.1);
+        }
+
         body {
             background: #0f172a;
             display: flex;
@@ -80,7 +105,15 @@
             text-shadow: 0 0 15px rgba(56, 189, 248, 0.7);
         }
 
-        .subtitle { color: #94a3b8; font-size: 0.8rem; margin-bottom: 30px; letter-spacing: 2px; }
+        .subtitle {
+            color: #38bdf8;
+            font-size: 1.15rem;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            font-weight: bold;
+            text-shadow: 0 2px 8px rgba(56,189,248,0.10), 0 1px 0 #fff2;
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
         .circle-grid {
             display: flex;
@@ -113,11 +146,22 @@
             font-weight: 600;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 10px;
             transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .main-btn i {
+            order: 1;
+            min-width: 20px;
+        }
+        
+        .main-btn span {
+            order: 2;
         }
 
         .btn-fb { border: 1px solid #38bdf8; color: #38bdf8; }
@@ -180,46 +224,92 @@
 </head>
 <body>
 
-<div class="card">
-    <div class="logo-box">
-        <img src="logo1111.png" alt="HTX Flow">
+<div class="card" style="position: relative;">
+    <div style="position: absolute; top: 18px; right: 18px; z-index: 200;">
+        <div class="lang-toggle" onclick="toggleLanguage()" title="تغيير اللغة">
+            <i class="fa-solid fa-globe"></i>
+        </div>
+    </div>
+    <div style="position: relative; width: 130px; margin: 0 auto 20px;">
+        <div class="logo-box" style="position: relative;">
+            <img src="logo1111.png" alt="HTX Flow">
+        </div>
     </div>
     
     <h1>HTX FLOW DIGITAL</h1>
-    <div class="subtitle">CREATIVE DIGITAL SOLUTIONS</div>
+    <div class="subtitle" id="subtitle">حلول رقمية إبداعية</div>
 
     <div class="circle-grid">
-        <a href="tel:0666684561" class="circle-item"><i class="fa-solid fa-phone"></i></a>
-        <a href="https://wa.me/213772367259" class="circle-item" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="https://t.me/HTX7Flow" class="circle-item" target="_blank"><i class="fa-brands fa-telegram"></i></a>
-        <a href="https://www.google.com/maps" class="circle-item" target="_blank"><i class="fa-solid fa-location-dot"></i></a>
+        <a href="tel:0666684561" class="circle-item"><i class="fa-solid fa-phone" style="color: white;"></i></a>
+        <a href="https://wa.me/213772367259" class="circle-item" target="_blank"><i class="fa-brands fa-whatsapp" style="color: #25D366;"></i></a>
+        <a href="https://t.me/HTX7Flow" class="circle-item" target="_blank"><i class="fa-brands fa-telegram" style="color: #0088cc;"></i></a>
+        <a href="https://www.google.com/maps" class="circle-item" target="_blank"><i class="fa-solid fa-location-dot" style="color: #34a853;"></i></a>
     </div>
 
     <div class="btn-stack">
-        <a href="https://www.facebook.com/share/p/1CK39GzBgR/" class="main-btn btn-fb" target="_blank">
-            <i class="fa-brands fa-facebook"></i> FACEBOOK
+        <a href="https://www.facebook.com/share/p/1CK39GzBgR/" class="main-btn btn-fb" target="_blank" id="facebookBtn" style="justify-content: center;">
+            <i class="fa-brands fa-facebook"></i> <span id="fbText">فيسبوك</span>
         </a>
-        <a href="#" class="main-btn btn-tk" target="_blank">
-            <i class="fa-brands fa-tiktok"></i> TIKTOK
+        <a href="#" class="main-btn btn-tk" target="_blank" id="tiktokBtn" style="justify-content: center;">
+            <i class="fa-brands fa-tiktok"></i> <span id="tkText">تيك توك</span>
         </a>
-        <button class="save-btn" onclick="downloadVCard()">حفظ جهة الاتصال</button>
+        <button class="save-btn" id="saveBtn" onclick="downloadVCard()">حفظ جهة الاتصال</button>
     </div>
 
     <div class="qr-section" onclick="openQR()">
         <i class="fa-solid fa-qrcode fa-2x"></i>
-        <p style="font-size: 0.8rem; margin-top: 8px;">اضغط لمشاركة البطاقة</p>
+        <p style="font-size: 0.8rem; margin-top: 8px;" id="qrText">اضغط لمشاركة البطاقة</p>
     </div>
 </div>
 
 <div id="qrModal" class="modal" onclick="closeQR()">
     <div class="modal-content" onclick="event.stopPropagation()">
-        <h3 style="margin-bottom: 20px; color: white;">شارك ملفك التعريفي</h3>
+        <h3 style="margin-bottom: 20px; color: white;" id="qrTitle">شارك ملفك التعريفي</h3>
         <img id="qrImage" src="" alt="QR Code">
-        <span class="close-modal" onclick="closeQR()">إغلاق</span>
+        <span class="close-modal" id="closeBtn" onclick="closeQR()">إغلاق</span>
     </div>
 </div>
 
 <script>
+    let isArabic = true;
+    
+    // النصوص بالعربية والإنجليزية
+    const translations = {
+        ar: {
+            subtitle: "حلول رقمية إبداعية",
+            facebook: "فيسبوك",
+            tiktok: "تيك توك",
+            saveContact: "حفظ جهة الاتصال",
+            qrShare: "اضغط لمشاركة البطاقة",
+            qrTitle: "شارك ملفك التعريفي",
+            close: "إغلاق"
+        },
+        en: {
+            subtitle: "CREATIVE DIGITAL SOLUTIONS",
+            facebook: "FACEBOOK",
+            tiktok: "TIKTOK",
+            saveContact: "Save Contact",
+            qrShare: "Click to share card",
+            qrTitle: "Share your profile",
+            close: "Close"
+        }
+    };
+    
+    function toggleLanguage() {
+        isArabic = !isArabic;
+        const texts = translations[isArabic ? 'ar' : 'en'];
+        
+        // إبقاء الاتجاه ثابتاً للعربية للحفاظ على موقع الأيقونات
+        // تغيير النصوص فقط بدون تغيير direction
+        document.getElementById('subtitle').textContent = texts.subtitle;
+        document.getElementById('fbText').textContent = texts.facebook;
+        document.getElementById('tkText').textContent = texts.tiktok;
+        document.getElementById('saveBtn').textContent = texts.saveContact;
+        document.getElementById('qrText').textContent = texts.qrShare;
+        document.getElementById('qrTitle').textContent = texts.qrTitle;
+        document.getElementById('closeBtn').textContent = texts.close;
+    }
+
     function openQR() {
         // التعديل الاحترافي: جلب الرابط الحالي وتحديث الـ QR تلقائياً
         const currentUrl = window.location.href;
